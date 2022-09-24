@@ -1,6 +1,9 @@
-<!-- eslint-disable prettier/prettier -->
 <script setup>
   import { ref } from 'vue'
+  import { useAuth } from '@/composables/useAuth'
+
+  const { isAuthenticated, logout, user } = useAuth()
+
   const brand = ref("🏢 Victor's Company Directory")
 </script>
 
@@ -11,9 +14,19 @@
         <span class="brand-title">{{ brand }}</span>
       </RouterLink>
       <div class="menu">
-        <a href="#" class="menu-item">Departments</a>
-        <a href="#" class="menu-item">Settings</a>
-        <a href="#" class="menu-login">logout</a>
+        <p v-show="isAuthenticated" class="px-2 py-4">
+          Welcome back
+          <strong>
+            <i>{{ user.name }}</i>
+          </strong>
+        </p>
+        <div v-if="isAuthenticated">
+          <RouterLink :to="{ name: 'Settings' }" href="#" class="menu-item">Settings</RouterLink>
+          <button href="#" class="menu-logout" @click="logout">Logout</button>
+        </div>
+        <div v-else>
+          <RouterLink :to="{ name: 'Login' }" href="#" class="menu-login">Login</RouterLink>
+        </div>
       </div>
     </div>
   </nav>
@@ -31,11 +44,17 @@
       }
       .menu {
         @apply flex gap-2;
+        & div {
+          @apply py-2;
+        }
         &-item {
-          @apply rounded-md px-2 py-1 hover:bg-blue-400 hover:text-black;
+          @apply rounded-md px-4 py-2 hover:bg-blue-400 hover:text-black;
         }
         &-login {
-          @apply rounded-md bg-red-500 px-2 py-1 hover:bg-red-800;
+          @apply rounded-md bg-green-500 px-4 py-2 hover:bg-green-800;
+        }
+        &-logout {
+          @apply mx-2 rounded-md bg-red-500 px-4 py-2 hover:bg-red-800;
         }
       }
     }

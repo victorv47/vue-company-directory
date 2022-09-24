@@ -6,7 +6,7 @@
   const fullName = `${firstName} ${lastName}`
 
   const selectCard = () => {
-   console.log(`${fullName} selected`)
+    console.log(`${fullName} selected`)
   }
 </script>
 
