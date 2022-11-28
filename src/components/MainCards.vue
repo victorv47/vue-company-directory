@@ -7,7 +7,16 @@
 
 <template>
   <div class="sub-wrapper">
-    <MainCardsSingle v-for="employee in employees" :key="employee" />
+    <Suspense>
+      <MainCardsSingle
+        v-for="employee in employees"
+        :key="employee.employeeId"
+        :employee="employee"
+      />
+      <template #fallback>
+        <div>Loading...</div>
+      </template>
+    </Suspense>
   </div>
 </template>
 

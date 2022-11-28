@@ -11,7 +11,12 @@ import NotFound from '@/components/NotFound.vue'
 const routes = [
   { path: '/', name: 'Home', component: MainPage },
   { path: '/login', name: 'Login', component: LoginPage },
-  { path: '/settings', name: 'Settings', component: SettingsPage, meta: { requiresAuth: true } },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: SettingsPage,
+    meta: { requiresAuth: true },
+  },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ]
 
@@ -21,7 +26,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _, next) => {
-  if (to.meta.requiresAuth && !isAuthenticated.value) next({ name: 'Login', query: { redirect: to.fullPath } })
+  if (to.meta.requiresAuth && !isAuthenticated.value)
+    next({ name: 'Login', query: { redirect: to.fullPath } })
   else next()
 })
 
